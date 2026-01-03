@@ -2,25 +2,32 @@
 
 // write code here
 const list = document.querySelector('ul');
-const salarys = document.querySelectorAll('li[data-salary]');
-
-const array = [...salarys];
 
 function parseSalary(el) {
   const sal = el.dataset.salary.slice(1).split(',').join('');
 
   if (!isNaN(sal)) {
     return Number(sal);
+  } else {
+    return 0;
   }
 }
 
-function sortList(arr) {
-  arr.sort((a, b) => parseSalary(b) - parseSalary(a));
-  list.append(...arr);
+function sortList(liEl) {
+  const salarys = liEl.querySelectorAll('li[data-salary]');
+
+  const array = [...salarys];
+
+  array.sort((a, b) => parseSalary(b) - parseSalary(a));
+  liEl.append(...array);
 }
 
-function getEmployees(arr) {
-  return arr.map((el) => {
+function getEmployees(liEl) {
+  const salarys = liEl.querySelectorAll('li[data-salary]');
+
+  const array = [...salarys];
+
+  return array.map((el) => {
     return {
       name: el.textContent.trim(),
       position: el.dataset.position,
@@ -30,5 +37,6 @@ function getEmployees(arr) {
   });
 }
 
-sortList(array);
-getEmployees(array);
+sortList(list);
+
+getEmployees(list);
